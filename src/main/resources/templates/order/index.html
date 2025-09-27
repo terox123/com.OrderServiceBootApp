@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Orders</title>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<h1>📦 Список заказов</h1>
+
+<a href="/orders/new"> Новый заказ</a>
+<br><br>
+
+<ul>
+    <li th:each="o : ${orders}">
+        Заказ #[[${o.id}]] — Клиент: [[${o.customer.name}]]
+        <ul>
+            <li th:each="p : ${o.products}">
+                [[${p.name}]] ([[${p.price}]] ₽)
+            </li>
+        </ul>
+        <a th:href="@{'/orders/delete/' + ${o.id}}"> Удалить</a>
+    </li>
+</ul>
+
+</body>
+</html>

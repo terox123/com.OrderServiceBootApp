@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Order</title>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<h1>📝 Новый заказ</h1>
+
+<form th:action="@{/orders}" th:method="POST">
+    <label>Покупатель:</label>
+    <select name="customerId" required>
+        <option value="" disabled selected>-- выберите клиента --</option>
+        <option th:each="c : ${customers}"
+                th:value="${c.id}"
+                th:text="${c.name}">
+        </option>
+    </select>
+    <br><br>
+
+    <label>Продукты:</label><br>
+    <select name="productIds" multiple size="6" required>
+        <option th:each="p : ${products}"
+                th:value="${p.id}"
+                th:text="${p.name + ' (' + p.price + '₽)'}">
+        </option>
+    </select>
+    <br><br>
+
+    <button type="submit">💾 Сохранить заказ</button>
+    <a href="/orders">↩️ Отмена</a>
+</form>
+
+</body>
+</html>

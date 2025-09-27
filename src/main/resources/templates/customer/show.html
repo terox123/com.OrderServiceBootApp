@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ShowUser </title>
+</head>
+<body>
+
+<p>Customer Details</p>
+
+<div th:if="${customer != null}">
+
+    <p> ID: <span th:text="${customer.getId()}">ID</span></p>
+    <p> Name: <span th:text="${customer.getName()}">Name</span></p>
+    <p> Age: <span th:text="${customer.getAge()}">Age</span></p>
+    <p> Email: <span th:text="${customer.getEmail()}">Email</span></p>
+    <p> Created: <span th:text="${customer.getFormattedCreatedAt()}">Created</span></p>
+    <p> Date Of Birth: <span th:text="${customer.getDateOfBirth()}">Date of Birth</span></p>
+    <p> Gender: <span th:text="${customer.getGender()}">Gender</span></p>
+    <p> Password: <span th:text="${customer.getPassword()}"> Password</span></p>
+    <p> Role: <span th:text="${customer.getRole()}">Role</span></p>
+
+<div th:if="${#lists.isEmpty(orders)}">
+    No orders found
+</div>
+
+<div th:if="${not #lists.isEmpty(orders)}">
+    Orders of this customer
+<div th:each="order :${orders}">
+
+    <a th:href="@{/orders/{id}(id = ${order.getId()})}">Order</a>
+
+</div>
+
+
+    </div>
+
+
+</div>
+
+<div th:if="${customer == null}">
+    No customer found.
+</div>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Order</title>
+</head>
+<body>
+<h1>Delete Order</h1>
+
+<div th:if="${order != null}">
+    <p>Are you sure you want to delete this order?</p>
+    <p>ID: <span th:text="${order.id}"></span></p>
+    <p>Order Date: <span th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+    <p>Status: <span th:text="${order.status}"></span></p>
+    <p>Customer: <span th:text="${order.customer != null ? order.customer.name : 'N/A'}"></span></p>
+    <p>Number of Products: <span th:text="${order.products != null ? order.products.size() : 0}"></span></p>
+
+    <form th:action="@{/orders/delete/{id}(id=${order.id})}" method="POST">
+        <button type="submit">Delete Order</button>
+        <a th:href="@{/orders}">Cancel</a>
+    </form>
+</div>
+
+<div th:if="${order == null}">
+    <p>Order not found.</p>
+    <a th:href="@{/orders}">Back to orders</a>
+</div>
+</body>
+</html>

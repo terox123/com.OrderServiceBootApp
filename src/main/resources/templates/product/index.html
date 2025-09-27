@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Products</title></head>
+<body>
+<h1>Products</h1>
+<a href="/products/new"> Add Product</a>
+<ul>
+    <li th:each="p : ${products}">
+        [[${p.name}]] ([[${p.price}]] $)
+        <a th:href="@{'/products/edit/' + ${p.id}}">️ Edit</a>
+        <a th:href="@{'/products/delete/' + ${p.id}}"> Delete</a>
+    </li>
+</ul>
+</body>
+</html>

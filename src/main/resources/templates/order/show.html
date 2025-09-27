@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details</title>
+    <style>
+        .details { margin: 20px 0; }
+        .detail-item { margin: 5px 0; }
+        .products-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .products-table th, .products-table td { border: 1px solid #ddd; padding: 8px; }
+        .products-table th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+<h1>Order Details</h1>
+
+<div th:if="${order != null}">
+    <div class="details">
+        <div class="detail-item"><strong>ID:</strong> <span th:text="${order.id}"></span></div>
+        <div class="detail-item"><strong>Order Date:</strong> <span th:text="${order.getFormattedCreatedAt()}"></span></div>
+        <div class="detail-item"><strong>Customer:</strong>
+            <span th:if="${order.customer != null}">
+                    <a th:href="@{/customers/{id}(id=${order.customer.id})}"
+                       th:text="${order.customer.name + ' (' + order.customer.email + ')'}"></a>
+                </span>
+            <span th:if="${order.customer == null}">N/A</span>
+        </div>
+    </div>
+
+    <h3>Products in Order</h3>
+    <div th:if="${order.products != null}">
+        <table class="products-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${order.products}">
+                <td th:text="${product.id}"></td>
+                <td th:text="${product.name}"></td>
+                <td>
+                    <a th:href="@{/products/{id}(id=${product.id})}">View</a>
+                    <a th:href="@{/orders/{orderId}/remove-product(orderId=${order.id}, productId=${product.id})}"
+                       onclick="return confirm('Remove this product from order?')">Remove</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:if="${order.products == null}">
+            <p>No products in this order.</p>
+        </div>
+
+        <div style="margin-top: 20px;">
+    </div>
+        <a th:href="@{/orders/{id}/edit(id=${order.id})}">Edit Order</a>
+        <a th:href="@{/orders/{id}/delete(id=${order.id})}">Delete Order</a>
+        <a th:href="@{/orders}">Back to Orders List</a>
+    </div>
+</div>
+
+<div th:if="${order == null}">
+    <p>Order not found.</p>
+    <a th:href="@{/orders}">Back to Orders List</a>
+</div>
+</body>
+</html>

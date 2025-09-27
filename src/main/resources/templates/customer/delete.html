@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>DeleteUser</title>
+</head>
+<body>
+
+<p>User: <span th:text="${customer.getName()}"></span></p>
+<form th:action="@{/customers/{id}/delete(id=${customer.getId()})}" method="POST">
+    <button type="submit">Delete</button>
+</form>
+<a th:href="@{/customers}">Cancel</a>
+
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<br/>
+<a th:href="@{/customers/new}">Create user</a>
+
+<br/>
+<br/>
+<a> Customers List </a>
+
+<div th:each="customer : ${customers}">
+<p>
+    <a th:href="@{/customers/{id}(id=${customer.getId()})}" th:text="${customer.getName()}" >Name</a>
+    <a th:href="@{/customers/{id}/edit(id=${customer.getId()})}" >Edit</a>
+    <a th:href="@{/customers/{id}/delete(id=${customer.getId()})}" >Delete</a>
+</p>
+</div>
+
+<div th:if="${#lists.isEmpty(customers)}">
+    <p>No customers found.</p>
+</div>
+
+
+
+<a href="/">Return to the home page</a>
+
+
+</body>
+</html>
+
+
