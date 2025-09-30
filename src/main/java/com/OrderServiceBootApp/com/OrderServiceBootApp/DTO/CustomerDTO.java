@@ -1,36 +1,30 @@
 package com.OrderServiceBootApp.com.OrderServiceBootApp.DTO;
 
+import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Order;
+import com.OrderServiceBootApp.com.OrderServiceBootApp.repo.OrderRepository;
+import com.OrderServiceBootApp.com.OrderServiceBootApp.services.CustomerService;
 import jakarta.validation.constraints.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
+@Data
 public class CustomerDTO {
-    @Min(value = 0)
-    @Max(value = 130)
+    private long id;
     private int age;
-
-    @NotBlank(message = "Name can't be empty")
     private String name;
-
-    @NotEmpty(message = "Email can't be empty")
-    @Email(message = "Email should be valid")
     private String email;
-
-    @Past(message = "Date should be in past")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
-
-    @NotEmpty(message = "Gender can't be empty")
     private String gender;
-
-    private String password;
-
-
-    @NotEmpty(message = "Role can't be empty")
     private String role;
+    private String password;
+    private List<Order> orders;
 
 }

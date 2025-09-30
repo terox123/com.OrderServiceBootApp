@@ -1,9 +1,7 @@
 
 package com.OrderServiceBootApp.com.OrderServiceBootApp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -13,6 +11,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "orders")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +23,6 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    @JsonBackReference("order-customer")
     private Customer customer;
 
     @ManyToMany
@@ -33,7 +31,6 @@ public class Order {
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    @JsonManagedReference("order-product")
     private List<Product> products;
 
     public String getFormattedCreatedAt(){

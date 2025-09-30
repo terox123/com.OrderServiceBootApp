@@ -1,6 +1,8 @@
 package com.OrderServiceBootApp.com.OrderServiceBootApp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "products")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +26,6 @@ public class Product {
     @Column(name = "quantity")
     private int quantity;
 
-    @ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
-    @JsonBackReference("order-product")
+    @ManyToMany(mappedBy = "products")
     private List<Order> orders;
 }

@@ -54,11 +54,9 @@ ProductDTO productDTO = convertToProductDTO(productService.getById(id));
 if(bindingResult.hasErrors()){
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(product);
 }
-kafkaProducerService.sendMessage("my-topic", "key1", "Product " + product.toString() + "was saved");
-
 
 productService.create(product);
-
+    kafkaProducerService.sendMessage("my-topic", "key1", "Product " + product.toString() + "was saved");
 
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
 }

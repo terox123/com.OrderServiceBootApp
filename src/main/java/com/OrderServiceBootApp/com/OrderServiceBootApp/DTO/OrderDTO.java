@@ -2,6 +2,8 @@ package com.OrderServiceBootApp.com.OrderServiceBootApp.DTO;
 
 import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Order;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Product;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,18 +15,14 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@Data
 public class OrderDTO {
     private LocalDateTime createdAt;
     private String customerName;
-    private List<Product> productNames;
+    private List<Product> products;
 
 
-    public OrderDTO(Order order) {
-        this.createdAt = order.getCreatedAt();
-        this.customerName = order.getCustomer().getName();
-        this.productNames = order.getProducts();
-    }
+
 }
 
 

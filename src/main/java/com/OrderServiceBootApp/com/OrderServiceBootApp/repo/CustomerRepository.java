@@ -1,7 +1,7 @@
 package com.OrderServiceBootApp.com.OrderServiceBootApp.repo;
 
 import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Customer;
-import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Order;
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,5 +19,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     Page<Customer> findAllByOrderByDateOfBirthAsc(Pageable pageable);
 
     Optional<Customer> findByName(String name);
+@Query("SELECT distinct c from Customer c " + " left join fetch c.orders o "
+        + " left join fetch o.products " + "where c.id = :id")
+    Optional<Customer> findByIdOrdersAndProducts(@Param("id")long id);
 
 }

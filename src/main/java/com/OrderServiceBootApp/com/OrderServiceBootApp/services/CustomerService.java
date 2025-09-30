@@ -4,8 +4,12 @@ import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Customer;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.repo.CustomerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +28,11 @@ public class CustomerService {
         this.passwordEncoder = passwordEncoder;
     }
 
+
     public Page<Customer> findAllCustomers(Pageable pageable) {
         return customerRepository.findAll(pageable);
     }
+
 
     public Customer findCustomerById(long id) {
         return customerRepository.findById(id)
@@ -38,17 +44,20 @@ public class CustomerService {
                 .orElseThrow(() -> new EntityNotFoundException("Customer with email " + email + " was not found"));
     }
 
+    @CachePut(value = "customers", key = "#customer.id")
     @Transactional
-    public void save(Customer customer) {
+    public Customer save(Customer customer) {
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
-        customerRepository.save(customer);
+        return customerRepository.save(customer);
     }
 
+
+    @CachePut(value = "customers", key = "#id")
     @Transactional
-    public void update(long id, Customer updatedCustomer) {
+    public Customer update(long id, Customer updatedCustomer) {
         updatedCustomer.setId(id);
-      /*  updatedCustomer.setPassword(passwordEncoder.encode(updatedCustomer.getPassword()));*/
-        customerRepository.save(updatedCustomer);
+        updatedCustomer.setPassword(passwordEncoder.encode(updatedCustomer.getPassword()));
+        return customerRepository.save(updatedCustomer);
     }
 
     public Page<Customer> findAllCustomersSortedByBirthDateDesc(Pageable pageable) {
@@ -59,6 +68,7 @@ public class CustomerService {
         return customerRepository.findAllByOrderByDateOfBirthAsc(pageable);
     }
 
+    @CacheEvict(value = "customers", key = "#id")
     @Transactional
     public void delete(long id) {
         customerRepository.deleteById(id);

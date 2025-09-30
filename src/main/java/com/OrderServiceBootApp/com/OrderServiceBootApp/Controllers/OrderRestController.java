@@ -38,7 +38,9 @@ public class OrderRestController {
 
     @PostMapping
     public Order create(@RequestBody CreateOrderRequest request) {
-        return orderService.create(request.getCustomerId(), request.getProductIds());
+        Order order =  orderService.create(request.getCustomerId(), request.getProductIds());
+           kafkaProducerService.sendMessage("my-topic", "key1", "Order with id " + order.getId() + "was created");
+        return order;
     }
 
     @DeleteMapping("/{id}")
