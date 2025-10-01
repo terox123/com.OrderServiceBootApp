@@ -63,11 +63,13 @@ public class OrderService {
 
     @Transactional
     public void delete(Long id) {
+        Order order = getById(id);
         orderRepository.deleteById(id);
     }
 
 
 public List<Order> ordersByCustomerId(long id){
+        Customer customer = customerService.findCustomerById(id);
         return customerService.findCustomerById(id).getOrders();
 }
 }

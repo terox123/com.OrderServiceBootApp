@@ -9,7 +9,6 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +54,7 @@ public class CustomerService {
     @CachePut(value = "customers", key = "#id")
     @Transactional
     public Customer update(long id, Customer updatedCustomer) {
+        Customer customer = findCustomerById(id);
         updatedCustomer.setId(id);
         updatedCustomer.setPassword(passwordEncoder.encode(updatedCustomer.getPassword()));
         return customerRepository.save(updatedCustomer);
@@ -71,6 +71,7 @@ public class CustomerService {
     @CacheEvict(value = "customers", key = "#id")
     @Transactional
     public void delete(long id) {
+        Customer customer = findCustomerById(id);
         customerRepository.deleteById(id);
     }
 

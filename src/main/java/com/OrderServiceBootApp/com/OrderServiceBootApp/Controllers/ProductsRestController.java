@@ -64,7 +64,7 @@ productService.create(product);
 
 @PostMapping("/{id}/delete")
 public ResponseEntity<Product> delete(@PathVariable("id")long id){
-
+        Product product = productService.getById(id);
         productService.delete(id);
 kafkaProducerService.sendMessage("my-topic", "key1", "product with id " + id + " was deleted");
         return ResponseEntity.status(HttpStatus.OK).body(productService.getById(id));

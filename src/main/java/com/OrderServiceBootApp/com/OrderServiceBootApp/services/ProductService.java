@@ -21,7 +21,7 @@ public class ProductService {
 
     public Product getById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product not found: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Product not found, id: " + id));
     }
 
 
@@ -32,11 +32,13 @@ public class ProductService {
 
     @Transactional
     public Product update(Long id, Product newData) {
+        Product product = getById(id);
         newData.setId(id);
         return productRepository.save(newData);
     }
     @Transactional
     public void delete(Long id) {
+        Product product = getById(id);
         productRepository.deleteById(id);
     }
 }

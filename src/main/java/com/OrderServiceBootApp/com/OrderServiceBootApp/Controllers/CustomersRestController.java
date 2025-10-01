@@ -3,13 +3,10 @@ package com.OrderServiceBootApp.com.OrderServiceBootApp.Controllers;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.DTO.CustomerDTO;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.kafka.KafkaProducerService;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Customer;
-import com.OrderServiceBootApp.com.OrderServiceBootApp.repo.CustomerRepository;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.services.CustomerService;
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -67,17 +64,40 @@ return ResponseEntity.ok(customerDTO);
     kafkaProducerService.sendMessage("my-topic", "key1",
             "Customer with id " + customer.getId() + " was created");
 
-
-
     return ResponseEntity.status(HttpStatus.CREATED).body(customer);
     }
 
+@PostMapping("/{id}")
+    public ResponseEntity<Customer> update(@Valid CustomerDTO customerDTO, BindingResult bindingResult){
+    Customer customer = convertToCustomer(customerDTO);
+    if(bindingResult.hasErrors()) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(customer);
+    }
+    customerService.update(customer.getId(), customer);
+    kafkaProducerService.sendMessage("my-topic", "key1", "Customer with id "
+            + customer.getId() + " was updated");
 
+    return ResponseEntity.status(HttpStatus.OK).body(customer);
 
+}
 
+@PostMapping("/{id}/delete")
+public ResponseEntity<Customer> deleteCustomer(@PathVariable("id")long id){
+    Customer customer = customerService.findCustomerById(id);
+    customerService.delete(id);
+    kafkaProducerService.sendMessage("my-topic", "key1", "Customer with id "
+            + id + " was deleted");
+
+    return ResponseEntity.status(HttpStatus.OK).body(customer);
+}
 
 private CustomerDTO convertToCustomerDTO(Customer customer){
     return modelMapper.map(customer, CustomerDTO.class);
+}
+
+
+private Customer convertToCustomer(CustomerDTO customerDTO){
+    return modelMapper.map(customerDTO, Customer.class);
 }
 
 }
