@@ -2,6 +2,7 @@ package com.OrderServiceBootApp.com.OrderServiceBootApp.Controllers;
 
 import com.OrderServiceBootApp.com.OrderServiceBootApp.DTO.CustomerDTO;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Customer;
+import com.OrderServiceBootApp.com.OrderServiceBootApp.security.JWTUtil;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.services.CustomerService;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.util.CustomerValidator;
 import jakarta.validation.Valid;
@@ -20,12 +21,14 @@ public class AuthController {
     private final CustomerValidator customerValidator;
     private final CustomerService customerService;
     private final ModelMapper modelMapper;
+    private final JWTUtil jwtUtil;
 
     @Autowired
-    public AuthController(CustomerValidator customerValidator, CustomerService customerService, ModelMapper modelMapper) {
+    public AuthController(CustomerValidator customerValidator, CustomerService customerService, ModelMapper modelMapper, JWTUtil jwtUtil) {
         this.customerValidator = customerValidator;
         this.customerService = customerService;
         this.modelMapper = modelMapper;
+        this.jwtUtil = jwtUtil;
     }
 
 
@@ -49,16 +52,20 @@ public class AuthController {
      */
 
     @PostMapping("/registration")
-    public String performRegistration(@ModelAttribute("customer") @Valid CustomerDTO customerDTO,
+    public String performRegistration(@RequestBody @Valid CustomerDTO customerDTO,
                                       BindingResult bindingResult) {
         Customer customer = convertToCustomer(customerDTO);
         customerValidator.validate(customer, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "auth/registration";
+            throw new IllegalArgumentException("Incorrect Data");
         }
 
         customerService.save(customer);
+
+
+
+
         return "redirect:/login";
     }
 
