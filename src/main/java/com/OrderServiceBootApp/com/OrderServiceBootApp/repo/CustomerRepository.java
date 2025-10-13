@@ -19,8 +19,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     Page<Customer> findAllByOrderByDateOfBirthAsc(Pageable pageable);
 
     Optional<Customer> findByName(String name);
-@Query("SELECT distinct c from Customer c " + " left join fetch c.orders o "
-        + " left join fetch o.products " + "where c.id = :id")
-    Optional<Customer> findByIdOrdersAndProducts(@Param("id")long id);
 
 }
