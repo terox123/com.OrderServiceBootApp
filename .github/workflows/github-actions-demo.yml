@@ -16,18 +16,18 @@ jobs:
         java-version: [11, 17]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
 
       # устанавливаем версию jdk
       - name: Set up JDK ${{ matrix.java-version }}
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
 
 
-      # запусскаются тесты из папки test
+      # запускаются тесты из папки test
       - name: Run mvn test Java ${{ matrix.java-version}}
         run: mvn test
 
