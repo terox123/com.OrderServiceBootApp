@@ -18,7 +18,8 @@
         <java.version>17</java.version>
         <spring-cloud.version>2025.0.0</spring-cloud.version>
         <grpc.version>1.76.0</grpc.version>
-        <protobuf.version>3.25.1</protobuf.version>
+        <!--<protobuf.version>3.25.1</protobuf.version>-->
+
     </properties>
 
     <dependencies>
@@ -144,7 +145,7 @@
             <artifactId>grpc-netty</artifactId>
             <version>${grpc.version}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
             <version>${protobuf.version}</version>
@@ -153,7 +154,7 @@
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java-util</artifactId>
             <version>${protobuf.version}</version>
-        </dependency>
+        </dependency>-->
 
         <!-- Database -->
         <dependency>
@@ -268,17 +269,16 @@
                 <version>3.0.0</version>
             </plugin>
 
-            <!-- Protobuf Maven Plugin -->
+           <!-- &lt;!&ndash; Protobuf Maven Plugin &ndash;&gt;
             <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>0.6.1</version>
                 <configuration>
-                    <!-- БЕЗ :exe:${os.detected.classifier} -->
-                    <protocArtifact>com.google.protobuf:protoc:${protobuf.version}</protocArtifact>
+                    &lt;!&ndash;<protocArtifact>com.google.protobuf:protoc:${protobuf.version}</protocArtifact>
                     <pluginId>grpc-java</pluginId>
                     <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}</pluginArtifact>
-                    <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
+                    <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>&ndash;&gt;
                 </configuration>
                 <executions>
                     <execution>
@@ -288,7 +288,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
 
             <!-- Добавление сгенерированных источников в classpath -->
             <plugin>
