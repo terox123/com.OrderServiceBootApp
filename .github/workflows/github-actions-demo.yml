@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-
         java-version: ['17']  # берём jdk из контейнера
     container:
       image: maven:3.9-eclipse-temurin-17
@@ -25,7 +24,7 @@ jobs:
 
       # Запускаются тесты из папки test
       - name: Run mvn test Java ${{ matrix.java-version }}
-        run: mvn test
+        run:  mvn test -Dprotobuf.skip=true
 
       # Генерирует HTML-отчёт о тестах
       - name: Generate test Report
