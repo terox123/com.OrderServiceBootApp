@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java-version: ['17']  # Добавлено: определяет matrix.java-version, фиксировано на 17 из контейнера
+
+        java-version: ['17']  # берём jdk из контейнера
     container:
       image: maven:3.9-eclipse-temurin-17
     steps:

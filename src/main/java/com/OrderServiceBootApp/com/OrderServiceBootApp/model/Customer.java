@@ -75,6 +75,16 @@ public class Customer {
         return createdAt.format(dateTimeFormatter);
     }
 
+    public Customer(String name, int age, String email, LocalDate dateOfBirth, String gender, String password, String role) {
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.password = password;
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User  {" +

@@ -43,7 +43,7 @@ public class CustomerService {
                 .orElseThrow(() -> new EntityNotFoundException("Customer with email " + email + " was not found"));
     }
 
-    @CachePut(value = "customers", key = "#customer.id")
+    /*@CachePut(value = "customers", key = "#customer.id")*/
     @Transactional
     public Customer save(Customer customer) {
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));

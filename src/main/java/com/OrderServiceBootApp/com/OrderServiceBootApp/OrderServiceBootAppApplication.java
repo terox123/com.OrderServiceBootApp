@@ -1,14 +1,12 @@
 package com.OrderServiceBootApp.com.OrderServiceBootApp;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
-import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+/*import com.OrderServiceBootApp.com.OrderServiceBootApp.services.GreetingServiceImpl;*/
+import io.grpc.Server;
+import io.grpc.ServerBuilder;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 
@@ -26,6 +24,11 @@ public class OrderServiceBootAppApplication {
         return new ModelMapper();
     }
 
+   /* @Bean
+    public Server server(){
+        return ServerBuilder.forPort(8080).addService(new GreetingServiceImpl()).build();
+
+    }*/
 
 
 

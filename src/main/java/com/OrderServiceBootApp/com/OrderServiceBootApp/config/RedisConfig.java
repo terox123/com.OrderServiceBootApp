@@ -63,7 +63,7 @@ public class RedisConfig {
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-        // ТУТ ТОЖЕ НУЖНО activateDefaultTyping !!!
+        // ТУТ ТОЖЕ НУЖНО activateDefaultTyping
         objectMapper.activateDefaultTyping(
                 objectMapper.getPolymorphicTypeValidator(),
                 ObjectMapper.DefaultTyping.NON_FINAL,
@@ -83,4 +83,8 @@ public class RedisConfig {
                 .cacheDefaults(config)
                 .build();
     }
+
+
+
+
 }

@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: OrderServiceBootApp
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: Bilut2006b12
+    url: jdbc:postgresql://localhost:5432/postgres
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+      jakarta:
+        persistence:
+          validation:
+            mode: none
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 9000ms
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: my-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 10
+  
+
+
+secret_value_jwt: secret-json

@@ -30,13 +30,6 @@ private final CustomerService customerService;
 private final KafkaProducerService kafkaProducerService;
 private final ModelMapper modelMapper;
 
-@Autowired
-    public CustomersRestController(CustomerService customerService, KafkaProducerService kafkaProducerService, ModelMapper modelMapper) {
-        this.customerService = customerService;
-    this.kafkaProducerService = kafkaProducerService;
-    this.modelMapper = modelMapper;
-}
-
     @GetMapping
     public ResponseEntity<List<CustomerDTO>> getAll(@PageableDefault()Pageable pageable){
 List<CustomerDTO> customerDTOS = customerService.findAllCustomers(pageable)
@@ -48,6 +41,13 @@ kafkaProducerService.sendMessage("my-topic", "key1", "All customers are received
 
 return ResponseEntity.ok(customerDTOS);
 
+    }
+
+    @Autowired
+    public CustomersRestController(CustomerService customerService, KafkaProducerService kafkaProducerService, ModelMapper modelMapper) {
+        this.customerService = customerService;
+        this.kafkaProducerService = kafkaProducerService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/{id}")
