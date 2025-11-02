@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-
 @Component
 public class JWTFilter extends OncePerRequestFilter {
 
@@ -30,33 +29,32 @@ public class JWTFilter extends OncePerRequestFilter {
 
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, JWTVerificationException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         String authHeader = request.getHeader("Authorization");
-        if(authHeader != null && !authHeader.isBlank() && authHeader.startsWith("Bearer ")){
-String jwt = authHeader.substring(7);
 
-if(jwt.isBlank()){
-throw new ServletException();
-}
+        if(authHeader != null && authHeader.isBlank() && authHeader.startsWith("Bearer ")){
+            String jwt = authHeader.substring(7);
+        try{
+            String username = jwtUtil.validateTokenAndRetrieveClaim(jwt);
+            UserDetails userDetails = customerDetailsService.loadUserByUsername(username);
+            UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(customerDetailsService,
+                            userDetails.getPassword(),
+                            userDetails.getAuthorities()
+                            );
 
-else {
-    try {
-        String username = jwtUtil.validateTokenAndRetrieveClaim(jwt);
-        UserDetails customerDetails = customerDetailsService.loadUserByUsername(username);
-        UsernamePasswordAuthenticationToken authToken =
-                new UsernamePasswordAuthenticationToken(customerDetails
-                        ,customerDetails.getPassword(), customerDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authToken);
 
-        SecurityContextHolder.getContext().setAuthentication(authToken);
-    }catch (JWTVerificationException ex){
-        throw new JWTVerificationException("Invalid JWT token");
-    }
 
-}
 
+        }catch (JWTVerificationException ex){
+            throw new ServletException();
         }
 
-        filterChain.doFilter(request, response);
 
+
+        }
+filterChain.doFilter(request, response);
     }
 }

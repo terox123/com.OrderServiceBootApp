@@ -68,6 +68,7 @@ public class Customer {
 
 public Customer(){
 
+    createdAt = LocalDateTime.now();
 }
 
 
@@ -85,7 +86,6 @@ public Customer(){
         this.gender = gender;
         this.password = password;
         this.role = role;
-        createdAt = LocalDateTime.now();
     }
 
     @Override

@@ -1,8 +1,7 @@
 spring:
   application:
     name: OrderServiceBootApp
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
@@ -32,7 +31,5 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       retries: 10
-  
-
 
 secret_value_jwt: secret-json

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Slf4j
 @Controller
 @RequestMapping("/auth")
@@ -52,21 +54,22 @@ public class AuthController {
      */
 
     @PostMapping("/registration")
-    public String performRegistration(@RequestBody @Valid CustomerDTO customerDTO,
-                                      BindingResult bindingResult) {
+    public String performRegistration(@ModelAttribute("customer") @Valid CustomerDTO customerDTO,
+                                           BindingResult bindingResult) {
         Customer customer = convertToCustomer(customerDTO);
         customerValidator.validate(customer, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            throw new IllegalArgumentException("Incorrect Data");
+            return "auth/registration";
+            /*throw new IllegalArgumentException("Incorrect Data");*/
         }
 
         customerService.save(customer);
 
-
-
+        System.out.println(jwtUtil.generateJwtToken(customer.getName()));
 
         return "redirect:/login";
+
     }
 
     private Customer convertToCustomer(CustomerDTO customerDTO){

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
 @Service
 @Transactional(readOnly = true)
 public class CustomerService {
@@ -43,7 +42,7 @@ public class CustomerService {
                 .orElseThrow(() -> new EntityNotFoundException("Customer with email " + email + " was not found"));
     }
 
-    /*@CachePut(value = "customers", key = "#customer.id")*/
+    @CachePut(value = "customers", key = "#customer.id")
     @Transactional
     public Customer save(Customer customer) {
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));

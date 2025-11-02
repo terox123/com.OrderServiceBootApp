@@ -51,5 +51,5 @@ services:
 
 
 volumes:
-  redis_data:
+#  redis_data:
   postgres_data:

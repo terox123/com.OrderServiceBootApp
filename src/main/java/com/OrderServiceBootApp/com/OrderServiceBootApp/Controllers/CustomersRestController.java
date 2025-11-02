@@ -37,6 +37,10 @@ List<CustomerDTO> customerDTOS = customerService.findAllCustomers(pageable)
         .map(this::convertToCustomerDTO)
                 .toList();
 
+Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+CustomerDetails customerDetails = (CustomerDetails) authentication.getPrincipal();
+        System.out.println(customerDetails.getUsername()); // нужно для примера, показывает, что jwt аутентификация работает
+
 kafkaProducerService.sendMessage("my-topic", "key1", "All customers are received");
 
 return ResponseEntity.ok(customerDTOS);
