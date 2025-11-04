@@ -13,9 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java-version: ['17']  # берём jdk из контейнера
+        java-version: ['21']
     container:
-      image: maven:3.9-eclipse-temurin-17
+      image: maven:3.9-eclipse-temurin-21
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
