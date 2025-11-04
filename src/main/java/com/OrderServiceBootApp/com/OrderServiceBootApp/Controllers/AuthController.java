@@ -2,6 +2,7 @@ package com.OrderServiceBootApp.com.OrderServiceBootApp.Controllers;
 
 import com.OrderServiceBootApp.com.OrderServiceBootApp.DTO.CustomerDTO;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Customer;
+import com.OrderServiceBootApp.com.OrderServiceBootApp.security.JWTUtil;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.services.CustomerService;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.util.CustomerValidator;
 import jakarta.validation.Valid;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Slf4j
 @Controller
 @RequestMapping("/auth")
@@ -20,12 +23,14 @@ public class AuthController {
     private final CustomerValidator customerValidator;
     private final CustomerService customerService;
     private final ModelMapper modelMapper;
+    private final JWTUtil jwtUtil;
 
     @Autowired
-    public AuthController(CustomerValidator customerValidator, CustomerService customerService, ModelMapper modelMapper) {
+    public AuthController(CustomerValidator customerValidator, CustomerService customerService, ModelMapper modelMapper, JWTUtil jwtUtil) {
         this.customerValidator = customerValidator;
         this.customerService = customerService;
         this.modelMapper = modelMapper;
+        this.jwtUtil = jwtUtil;
     }
 
 
@@ -45,21 +50,26 @@ public class AuthController {
 
     /*
      тут проверяется валидность данных пользователя, описанных в валидаторе и entity user,
-      при успешной регистрации идёт перенаправление на страницу логина
+     при успешной регистрации идёт перенаправление на страницу логина
      */
 
     @PostMapping("/registration")
     public String performRegistration(@ModelAttribute("customer") @Valid CustomerDTO customerDTO,
-                                      BindingResult bindingResult) {
+                                           BindingResult bindingResult) {
         Customer customer = convertToCustomer(customerDTO);
         customerValidator.validate(customer, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "auth/registration";
+            /*throw new IllegalArgumentException("Incorrect Data");*/
         }
 
         customerService.save(customer);
+
+        System.out.println(jwtUtil.generateJwtToken(customer.getName()));
+
         return "redirect:/login";
+
     }
 
     private Customer convertToCustomer(CustomerDTO customerDTO){

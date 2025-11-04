@@ -55,7 +55,6 @@ private final OrderService orderService;
 
         model.addAttribute("customers", customersPage.getContent());
 
-
         return "customer/index";
     }
 

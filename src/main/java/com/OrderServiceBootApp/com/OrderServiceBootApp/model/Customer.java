@@ -3,6 +3,7 @@ package com.OrderServiceBootApp.com.OrderServiceBootApp.model;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -65,14 +66,26 @@ public class Customer {
     @NotEmpty(message = "Role can't be empty")
     private String role;
 
+public Customer(){
 
-    public Customer(){
-        createdAt = LocalDateTime.now();
-    }
+    createdAt = LocalDateTime.now();
+}
+
+
 
     public String getFormattedCreatedAt() {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
         return createdAt.format(dateTimeFormatter);
+    }
+
+    public Customer(String name, int age, String email, LocalDate dateOfBirth, String gender, String password, String role) {
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.password = password;
+        this.role = role;
     }
 
     @Override

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package com.OrderServiceBootApp;
+
+option java_package = "com.OrderServiceBootApp.grpc";
+option java_outer_classname = "GreetingServiceOuterClass";
+
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloResponse {
+  string greeting = 1;
+}
+
+service GreetingService {
+  rpc greeting (HelloRequest) returns (HelloResponse);
+}
+

@@ -11,13 +11,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 @Data
 public class CustomerDTO {
-    private long id;
     private int age;
     private String name;
     private String email;
@@ -26,5 +26,8 @@ public class CustomerDTO {
     private String role;
     private String password;
     private List<Order> orders;
+
+
+
 
 }

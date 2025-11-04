@@ -1,8 +1,6 @@
 package com.OrderServiceBootApp.com.OrderServiceBootApp.DTO;
 
 import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Order;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToMany;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
