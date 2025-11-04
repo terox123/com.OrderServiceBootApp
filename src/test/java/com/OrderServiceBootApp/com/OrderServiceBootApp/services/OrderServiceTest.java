@@ -1,12 +1,10 @@
-package com.OrderServiceBootApp.com.OrderServiceBootApp;
+package com.OrderServiceBootApp.com.OrderServiceBootApp.services;
 
 import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Customer;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Order;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Product;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.repo.OrderRepository;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.repo.ProductRepository;
-import com.OrderServiceBootApp.com.OrderServiceBootApp.services.CustomerService;
-import com.OrderServiceBootApp.com.OrderServiceBootApp.services.OrderService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,8 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Тесты для OrderService.
- * Используется JUnit 5 и Mockito для имитации зависимостей.
+ * Unit-tests for OrdersService
  */
 class OrderServiceTest {
 
