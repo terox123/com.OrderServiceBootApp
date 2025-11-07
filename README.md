@@ -1,7 +1,7 @@
-Описание
+Описание:
 Это Spring Boot приложение для управления заказами, пользователями и продуктами. Оно предоставляет как веб-интерфейс (Thymeleaf), так и REST API для CRUD-операций с пользователями (Customer), заказами (Order) и продуктами (Product). Приложение использует JWT для аутентификации, Redis для кэширования, Kafka для асинхронных сообщений и PostgreSQL для базы данных. Поддерживает пагинацию, валидацию и роли пользователей. Полностью контейнеризовано с использованием Docker и Docker Compose.
 
-Функции
+Функции:
 Аутентификация и авторизация: Регистрация/логин пользователей с JWT-токенами и ролями (например, USER, ADMIN).
 Управление пользователями: Создание, чтение, обновление, удаление пользователей с пагинацией и сортировкой по дате рождения.
 Управление заказами: Создание заказов с привязкой к пользователям и продуктам, проверка наличия товаров.
@@ -19,18 +19,18 @@ Docker и Docker Compose (для запуска всех сервисов)
 Клонируйте репозиторий:
 
 
-Copy code
+Copy code:
 git clone https://github.com/terox123/com.OrderServiceBootApp.git
 cd com.OrderServiceBootApp
 Соберите JAR-файл:
 
 
-Copy code
+
 ./mvnw clean package -DskipTests
 Запустите все сервисы с помощью Docker Compose (включая Kafka, Zookeeper, PostgreSQL, Redis и само приложение):
 
 
-Copy code
+
 docker-compose up --build
 Приложение будет доступно по адресу: http://localhost:8080
 PostgreSQL: localhost:5432 (DB: postgres, User: postgres, Password: Bilut2006b12)
@@ -43,7 +43,7 @@ Docker Compose автоматически настроит все зависим
 Обновите src/main/resources/application.properties с вашими настройками (по умолчанию настроено на localhost).
 Соберите и запустите:
 
-Copy code
+
 ./mvnw spring-boot:run
 Конфигурация
 Основные настройки в src/main/resources/application.properties:
