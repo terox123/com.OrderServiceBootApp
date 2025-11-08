@@ -1,4 +1,4 @@
-package com.OrderServiceBootApp.com.OrderServiceBootApp.Controllers;
+package com.OrderServiceBootApp.com.OrderServiceBootApp.rest;
 
 import com.OrderServiceBootApp.com.OrderServiceBootApp.DTO.OrderDTO;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.kafka.KafkaProducerService;
@@ -10,7 +10,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/orders")

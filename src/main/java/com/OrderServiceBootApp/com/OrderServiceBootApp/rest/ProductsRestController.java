@@ -1,9 +1,8 @@
-package com.OrderServiceBootApp.com.OrderServiceBootApp.Controllers;
+package com.OrderServiceBootApp.com.OrderServiceBootApp.rest;
 
 
 import com.OrderServiceBootApp.com.OrderServiceBootApp.DTO.ProductDTO;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.kafka.KafkaProducerService;
-import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Customer;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.model.Product;
 import com.OrderServiceBootApp.com.OrderServiceBootApp.services.ProductService;
 import jakarta.validation.Valid;
