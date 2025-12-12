@@ -34,7 +34,7 @@ cd com.OrderServiceBootApp
 
 docker-compose up --build
 Приложение будет доступно по адресу: http://localhost:8080
-PostgreSQL: localhost:5432 (DB: postgres, User: postgres, Password: Bilut2006b12)
+PostgreSQL: localhost:5432 
 Redis: localhost:6379
 Kafka: localhost:9092 (Zookeeper: localhost:2181)
 Docker Compose автоматически настроит все зависимости. Если нужно запустить только сервисы без приложения, используйте docker-compose up zookeeper kafka postgres redis.
